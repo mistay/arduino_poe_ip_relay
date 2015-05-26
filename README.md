@@ -6,7 +6,7 @@ This device enables generic loads (here: valve actuators) to be controlled by TC
 
 The power for the relay card and the Arduino Pro MINI is derived by a POE 802.3af ethernet switch.
 
-A Texas Instruments TPS2375 chip is used to negotiate the power class (there are a couple of classes (4?) and the value of a resistor is used to tell the ethernet switch the requested class) and provides the needed power to the Arduino. Unfortunatly the ENC28J60 (Ethernet Chip) needs up to 250mA@5V ( = 1.25Watt) and cannot be driven at startup. As workaround the ENC28J60 Ethernet module is powered with a little delay. Therefore a BD139 transitor is used as a switch to power the the ethernet module.
+A Texas Instruments TPS2375 chip is used to negotiate the power class (there are a couple of classes (4?) and the value of a resistor is used to tell the ethernet switch the requested class) and provides the needed power to the Arduino. Unfortunatly the ENC28J60 (Ethernet Chip) needs up to 250mA@5V ( = 1.25Watt) and cannot be driven at startup. As a workaround the power of the Ethernet module (ENC28J60) is delayed by a transistor (BD139) used as a switch.
 
 3 LEDs indicate the status of this device:
 
