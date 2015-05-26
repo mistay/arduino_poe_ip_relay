@@ -23,7 +23,7 @@ In emergency state (RED LED on) the Arduino waits for another 100 seconds for a 
 
 This mechanism is perfect for heating systems that try to keep track of the temperature flowing though the pipes by a non realtime operating system and/or non microcontroller ecosystem.
 
-So in normal operation the controlling host is recommended to establish a tcp connection in the space of 10 seconds.
+So in normal operation the controlling host is asked to establish a tcp connection in the space of 10 seconds.
 
 ## Block Diagram
 <img width="300px" src="https://raw.githubusercontent.com/mistay/arduino_poe_ip_relay/master/media/blockdiagram.png" />
