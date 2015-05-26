@@ -30,5 +30,5 @@ So in normal operation the controlling host is recommended to establish a tcp co
 <img width="300px" src="https://raw.githubusercontent.com/mistay/arduino_poe_ip_relay/master/media/components.jpg" />
 
 ## Arduino Source Code
-look at [arduino_poe_ip_relay/](https://github.com/mistay/arduino_poe_ip_relay/tree/master/arduino_poe_ip_relay) directory
+look at the [root](https://github.com/mistay/arduino_poe_ip_relay) directory
 
