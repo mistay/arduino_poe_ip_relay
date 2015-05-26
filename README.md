@@ -19,6 +19,8 @@ A special feature of this device is the integrated software watchdog. The progra
 
 After the RED LED switched on another 100 seconds can last until the ATMega328 CPU (on the Arduino PRO Mini) is beeing reset. This behaviour is desired to guarantee a new connection can be established. Thus, a potential open tcp connection will be reset and the device will be ready to accept new tcp connections.
 
+This is perfect for heating systems that try to keep track of the temperature flowing though the pipes by a non realtime operating system and/or non microcontroller ecosystem.
+
 So in normal operation the controlling host is recommended to establish a tcp connection in the space of 10 seconds.
 
 ## Block Diagram
