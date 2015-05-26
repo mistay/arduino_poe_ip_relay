@@ -43,10 +43,12 @@ A special Ethernet Jack is needed to get this up and running, I used a [Wurth 74
 
 The connection to the ENC28J60 Ethernet module (RJ45 Hanrun HR91105a modular jacket) is done with this mapping:
 
-Wurth PIN 1 <--> Hanrun J1
-Wurth PIN 2 <--> Hanrun J2
-Wurth PIN 3 <--> Hanrun J3
-Wurtz PIN 6 <--> Hanrun J6
+Wurth  | Hanrun
+------------- | -------------
+PIN 1 | J1
+PIN 2 | J2
+PIN 3 | J3
+PIN 6 | J6
 ## Communication Protocol
 
 ### Command
