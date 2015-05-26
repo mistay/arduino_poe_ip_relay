@@ -35,8 +35,16 @@ Have a look at the circuit (taken from [datasheet](http://www.ti.com/lit/ds/syml
 
 <img width="300px" src="https://raw.githubusercontent.com/mistay/arduino_poe_ip_relay/master/media/tsp_circuit.png" />
 
+<img width="300px" src="https://raw.githubusercontent.com/mistay/arduino_poe_ip_relay/master/media/hanrun.jpg" />
+
 A special Ethernet Jack is needed to get this up and running, I used a [Wurth 7499210124A](http://www.digikey.com/product-detail/en/7499210124A/732-4975-ND/4429048)
 
+The connection to the ENC28J60 Ethernet module (RJ45 Hanrun HR91105a modular jacket) is done with this mapping:
+
+Wurth PIN 1 <--> Hanrun J1
+Wurth PIN 2 <--> Hanrun J2
+Wurth PIN 3 <--> Hanrun J3
+Wurtz PIN 6 <--> Hanrun J6
 ## Communication Protocol
 
 ### Command
