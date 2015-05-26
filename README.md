@@ -10,9 +10,11 @@ A Texas Instruments TPS2375 chip is used to negotiate the power class (there are
 
 3 LEDs indicate the status of this device:
 
-- GREEN LED 1: blinks if cpu works correctly. Solid light or switched off LED if software hangs.
-- GREEN LED 2: indicates an active transmission (via IP). Blinks two times if a command is executed.
-- RED LED: off on normal operation, solid on if watchdog triggered.
+- GREEN LED 1: blinks if the CPU (ATMega328 on Arduino PRO Mini) runs in normal state. Solid light or switched off LED if CPU stalled (something went wrong).
+- GREEN LED 2: Blinks 2 times if an active transmission (via IP) is executed.
+- RED LED: off for normal operation, solid on after watchdog triggered.
+
+A LED test (where each LED is switched on and off again) is performed each time the Arduino boots.
 
 ## Watchdog
 A peculiar feature of this device is the integrated software watchdog. The program tracks the commands of the host controlling this device. If a timeout of 10 seconds is detected it causes the RED LED (see above) to be switched on and resets all relay states to switch to emergency operation.
