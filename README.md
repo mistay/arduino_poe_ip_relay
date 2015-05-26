@@ -26,7 +26,7 @@ This mechanism is perfect for heating systems that try to keep track of the temp
 So in normal operation the controlling host is asked to establish at least one tcp connection (=command) in the space of 10 seconds.
 
 ## Block Diagram
-<img width="300px" src="https://raw.githubusercontent.com/mistay/arduino_poe_ip_relay/master/media/blockdiagram.png" />
+<img width="600px" src="https://raw.githubusercontent.com/mistay/arduino_poe_ip_relay/master/media/blockdiagram.png" />
 
 ## Components
 <img width="300px" src="https://raw.githubusercontent.com/mistay/arduino_poe_ip_relay/master/media/components.jpg" />
