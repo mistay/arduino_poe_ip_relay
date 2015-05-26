@@ -15,7 +15,7 @@ A Texas Instruments TPS2375 chip is used to negotiate the power class of this de
 - RED LED: off on normal operation, solid on if watchdog triggered.
 
 ## Watchdog
-A special feature of this device is the integrated software watchdog. The program tracks the commands of the host controlling this device. If a timeout of 10 seconds is detected it causes the RED LED (see above) to be switched on and resets all relay states to switch to emergency operation.
+A peculiar feature of this device is the integrated software watchdog. The program tracks the commands of the host controlling this device. If a timeout of 10 seconds is detected it causes the RED LED (see above) to be switched on and resets all relay states to switch to emergency operation.
 
 After the RED LED switched on another 100 seconds can last until the ATMega328 CPU (on the Arduino PRO Mini) is beeing reset. This behaviour is desired to guarantee a new connection can be established. Thus, a potential open tcp connection will be reset and the device will be ready to accept new tcp connections.
 
