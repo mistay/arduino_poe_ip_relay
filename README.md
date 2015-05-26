@@ -77,7 +77,10 @@ OPERATION: O (sets Pin to Output), I (sets Pin to Input)
 PARAMTER: 1 .. HIGH, 0 .. LOW
 
 
-Please note that in this case a logical HIGH switches the relay OFF and a logical LOW would cause the relay to be switched ON!
+Please note: that in this case a logical HIGH switches the relay OFF and a logical LOW would cause the relay to be switched ON!
+
+Please note: There is no command for toggling the status of a relais but can be implemented very easily.
+
 
 ### Returns
 Each command is acknowledged either by "NOK" or by "ACK"
