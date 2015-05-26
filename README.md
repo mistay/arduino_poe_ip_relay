@@ -1,5 +1,5 @@
-# poe ip relay card
-device for switching relais with power-over-ethernet (POE) with watchdog included based on arduino pro mini.
+# POE ip relay card
+device for switching relais with [power-over-ethernet](http://en.wikipedia.org/wiki/Power_over_Ethernet) (POE, 802.3af) with watchdog included based on arduino pro mini.
 
 ## Block Diagram
 <img width="300px" src="https://raw.githubusercontent.com/mistay/arduino_poe_ip_relay/master/media/blockdiagram.png" />
