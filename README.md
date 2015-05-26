@@ -50,9 +50,12 @@ Each command is acknowledged either by "NOK" or by "ACK"
 
 ## Usage
 
-xxPyyy, e.g. 05P085 - Port 05 PWM 085%"
-  xxOy,   e.g. 06O1   - Port 06 OUT on"
-  xxIy,   e.g. 07I    - Read Port 07 Digital Status"
+xxPyyy, e.g. 05P085 - Port 05 PWM 085%
+  
+  xxOy,   e.g. 06O1   - Port 06 OUT on
+  
+  xxIy,   e.g. 07I    - Read Port 07 Digital Status
+  
 
 
 
