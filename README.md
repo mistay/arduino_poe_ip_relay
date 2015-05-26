@@ -31,9 +31,11 @@ So in normal operation the controlling host is recommended to establish a tcp co
 
 ## POE
 
-Have a look at the circuit (taken from [datasheet](http://www.ti.com/lit/ds/symlink/tps2375.pdf))
+Have a look at the POE circuit (taken from [datasheet](http://www.ti.com/lit/ds/symlink/tps2375.pdf))
 
 <img width="300px" src="https://raw.githubusercontent.com/mistay/arduino_poe_ip_relay/master/media/tsp_circuit.png" />
+
+The Hanrun Pinout on the Ethernet module should look like this:
 
 <img width="300px" src="https://raw.githubusercontent.com/mistay/arduino_poe_ip_relay/master/media/hanrun.jpg" />
 
