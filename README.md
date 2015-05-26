@@ -19,7 +19,7 @@ A LED test (where each LED is switched on and off again) is performed each time 
 ## Watchdog
 A peculiar feature of this device is the integrated software watchdog. The commands of the host controlling this device are tracked. If a timeout of 10 seconds is detected it causes the watchdog to fire and the RED LED (see above) switches on. All relay states switch off and the system changes it's state to 'emergency'.
 
-After the RED LED switched on another 100 seconds can last until the ATMega328 CPU (on the Arduino PRO Mini) is beeing reset. This behaviour is desired to guarantee a new connection can be established. Thus, a potential open tcp connection will be reset and the device will be ready to accept new tcp connections.
+In emergency state (RED LED on) the Arduino waits for another 100 seconds for a valid command to leave emergency state. If no command is decoded the ATMega328 CPU (on the Arduino PRO Mini) is beeing reset. This behaviour is desired to guarantee a new connection can be established (even if a stalled connection blocks a new one). Thus, a potential open tcp connection will be reset and the device will be ready to accept new tcp connections after the device resets successfully.
 
 This is perfect for heating systems that try to keep track of the temperature flowing though the pipes by a non realtime operating system and/or non microcontroller ecosystem.
 
