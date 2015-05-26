@@ -40,7 +40,9 @@ This command sets D5 to Output (Arduino: pinMode(D5, OUTPUT); ) and sets pin Sta
 
 In general: <PIN PIN><OPERATION><PARAMETER>
 PIN: 0-9, A0, A1, A2, A3, A4, A5
+
 OPERATION: O (sets Pin to Output), I (sets Pin to Input)
+
 PARAMTER: 1 .. HIGH, 0 .. LOW
 
 
