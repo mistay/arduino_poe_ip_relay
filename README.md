@@ -29,6 +29,30 @@ So in normal operation the controlling host is recommended to establish a tcp co
 ## Components
 <img width="300px" src="https://raw.githubusercontent.com/mistay/arduino_poe_ip_relay/master/media/components.jpg" />
 
+## Communication Protocol
+
+Each command is acknowledged either by "NOK" or by "ACK"
+
+A command looks like this:
+
+Example: 05O1
+This command sets D5 to Output (Arduino: pinMode(D5, OUTPUT); ) and sets pin State to 1 (Arduino: digitalWrite(D5, HIGH); )
+
+In general: <PIN PIN><OPERATION><PARAMETER>
+PIN: 0-9, A0, A1, A2, A3, A4, A5
+OPERATION: O (sets Pin to Output), I (sets Pin to Input)
+PARAMTER: 1 .. HIGH, 0 .. LOW
+
+
+## Usage
+client.println("NOK");
+client.println("usage: xxPyyy, e.g. 05P085 - Port 05 PWM 085%");
+client.println("       xxOy,   e.g. 06O1   - Port 06 OUT on");
+client.println("       xxIy,   e.g. 07I    - Read Port 07 Digital Status");
+
+
+
+
 ## Arduino Source Code
 look at the [root](https://github.com/mistay/arduino_poe_ip_relay) directory
 
