@@ -1,4 +1,4 @@
-# POE IP 8 Channel Relay Card
+# POE IP 8 Channels Arduino Relay Card
 Device for switching relais with [power-over-ethernet](http://en.wikipedia.org/wiki/Power_over_Ethernet) (POE, 802.3af) with watchdog included based on Arduino PRO Mini.
 
 ## Description
