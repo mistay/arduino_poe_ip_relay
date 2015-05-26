@@ -8,7 +8,7 @@ The power for the relay card and the Arduino Pro MINI is derived by a POE 802.3a
 
 A Texas Instruments TPS2375 chip is used to negotiate the power class of this device and provides the needed power to the Arduino. Unfortunatly the ENC28J60 (Ethernet Chip) needs up to 250mA@5V ( = 1.25Watt) and cannot be driven at startup. As workaround the ENC28J60 Ethernet module is switched on after the voltage for the Arduino is released by the TI POE chip. Therefore a BD139 transitor is needed to switch the Ethernet module on after a delay of approx. 2-3 seconds.
 
-3 LEDs show the status of this device:
+3 LEDs indicate the status of this device:
 
 - GREEN LED 1: blinks if cpu works correctly. Solid light or switched off LED if software hangs.
 - GREEN LED 2: indicates an active transmission (via IP). Blinks two times if a command is executed.
