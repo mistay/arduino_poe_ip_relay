@@ -31,8 +31,7 @@ So in normal operation the controlling host is recommended to establish a tcp co
 
 ## Communication Protocol
 
-Each command is acknowledged either by "NOK" or by "ACK"
-
+### Command
 A command looks like this:
 
 Example: 05O1
@@ -45,12 +44,15 @@ OPERATION: O (sets Pin to Output), I (sets Pin to Input)
 
 PARAMTER: 1 .. HIGH, 0 .. LOW
 
+### Returns
+Each command is acknowledged either by "NOK" or by "ACK"
+
 
 ## Usage
-client.println("NOK");
-client.println("usage: xxPyyy, e.g. 05P085 - Port 05 PWM 085%");
-client.println("       xxOy,   e.g. 06O1   - Port 06 OUT on");
-client.println("       xxIy,   e.g. 07I    - Read Port 07 Digital Status");
+
+xxPyyy, e.g. 05P085 - Port 05 PWM 085%"
+  xxOy,   e.g. 06O1   - Port 06 OUT on"
+  xxIy,   e.g. 07I    - Read Port 07 Digital Status"
 
 
 
