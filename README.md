@@ -76,6 +76,9 @@ OPERATION: O (sets Pin to Output), I (sets Pin to Input)
 
 PARAMTER: 1 .. HIGH, 0 .. LOW
 
+
+Please note that in this case a logical HIGH switches the relay OFF and a logical LOW would cause the relay to be switched ON!
+
 ### Returns
 Each command is acknowledged either by "NOK" or by "ACK"
 
