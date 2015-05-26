@@ -23,7 +23,7 @@ In emergency state (RED LED on) the Arduino waits for another 100 seconds for a 
 
 This mechanism is perfect for heating systems that try to keep track of the temperature flowing though the pipes by a non realtime operating system and/or non microcontroller ecosystem.
 
-So in normal operation the controlling host is asked to establish a tcp connection in the space of 10 seconds.
+So in normal operation the controlling host is asked to establish at least one tcp connection (=command) in the space of 10 seconds.
 
 ## Block Diagram
 <img width="300px" src="https://raw.githubusercontent.com/mistay/arduino_poe_ip_relay/master/media/blockdiagram.png" />
@@ -58,6 +58,10 @@ PIN 6 | J6
 
 
 ## Communication Protocol
+
+A TCP connection can be established to this device (tcp port 23, telnet). Only one client at the same time is able to connect due to restrictions of the ethernet library.
+
+After the command is sent by the client it will be decoded and executed. The result of this operation is replied either by NOK (in case of failure) or by ACK (in the event of success). The TCP connection is immediately closed just as the reply was sent to the client.
 
 ### Command
 A command looks like this:
