@@ -1,8 +1,10 @@
 # poe ip relay card
 device for switching relais with power-over-ethernet (POE) with watchdog included based on arduino pro mini.
 
+## block diagram
 <img width="300px" src="https://raw.githubusercontent.com/mistay/arduino_poe_ip_relay/master/media/blockdiagram.png" />
 
+## components
 <img width="300px" src="https://raw.githubusercontent.com/mistay/arduino_poe_ip_relay/master/media/components.jpg" />
 
 ## Arduino Source Code
