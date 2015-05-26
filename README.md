@@ -2,7 +2,7 @@
 Device for switching relais with [power-over-ethernet](http://en.wikipedia.org/wiki/Power_over_Ethernet) (POE, 802.3af) with watchdog included based on Arduino PRO Mini.
 
 ## Description
-Often a generic load (here: valve actuators) need to be controlled by IP (here: TCP).
+Generic loads (here: valve actuators) can be controlled by TCP/IP.
 
 The power for the relay card and the Arduino Pro MINI is derived by a POE 802.3af ethernet switch.
 
