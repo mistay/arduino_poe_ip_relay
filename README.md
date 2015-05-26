@@ -21,7 +21,7 @@ A peculiar feature of this device is the integrated software watchdog. The comma
 
 In emergency state (RED LED on) the Arduino waits for another 100 seconds for a valid command to leave emergency state. If no command is decoded the ATMega328 CPU (on the Arduino PRO Mini) is beeing reset. This behaviour is desired to guarantee a new connection can be established (even if a stalled connection blocks a new one). Thus, a potential open tcp connection will be reset and the device will be ready to accept new tcp connections after the device resets successfully.
 
-This is perfect for heating systems that try to keep track of the temperature flowing though the pipes by a non realtime operating system and/or non microcontroller ecosystem.
+This mechanism is perfect for heating systems that try to keep track of the temperature flowing though the pipes by a non realtime operating system and/or non microcontroller ecosystem.
 
 So in normal operation the controlling host is recommended to establish a tcp connection in the space of 10 seconds.
 
