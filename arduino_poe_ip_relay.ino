@@ -1,17 +1,19 @@
-//#include <EEPROM.h>
-
-
 #include <UIPEthernet.h>
+
 #define LED_RED A0
 #define LED_GREEN1 A1
 #define LED_GREEN2 A2
 #define ETH_MODULE_PON A5
 
+#define WDTINITVALUE 10
+int wdtvalue = WDTINITVALUE;
 
 EthernetServer server = EthernetServer(23);
 
-
 bool ok = false;
+static uint32_t cpualivetimer = 0;
+
+void(* resetFunc) (void) = 0;
 
 void LEDInit() {
   pinMode(LED_RED, OUTPUT);
@@ -46,21 +48,22 @@ void LEDindicateWdtLimit() {
     digitalWrite(LED_GREEN2, HIGH);
 
     delay(20);
+    
     digitalWrite(LED_RED, LOW);
     digitalWrite(LED_GREEN1, LOW);
     digitalWrite(LED_GREEN2, LOW);
+    
     delay(20);
-
   }
 }
 
 void LEDindicateWdtActive() {
   digitalWrite(LED_RED, HIGH);
 }
+
 void LEDindicateWdtInactive() {
   digitalWrite(LED_RED, LOW);
 }
-
 
 void LEDindicateReboot() {
   int i = 0;
@@ -70,20 +73,18 @@ void LEDindicateReboot() {
     digitalWrite(LED_GREEN2, HIGH);
 
     delay(20);
+    
     digitalWrite(LED_RED, LOW);
     digitalWrite(LED_GREEN1, LOW);
     digitalWrite(LED_GREEN2, LOW);
+    
     delay(20);
-
   }
 }
 
-static uint32_t cpualivetimer = 0;
 void LEDindicateAlive() {
-  
   if (millis() > cpualivetimer) {
     cpualivetimer = millis() + 500;
-    
     digitalWrite(LED_GREEN1, !digitalRead(LED_GREEN1));
   }
 }
@@ -92,28 +93,9 @@ void LEDindicateActivity() {
   int i = 0;
   for (i = 0; i < 2; i++) {
     digitalWrite(LED_GREEN2, HIGH);
-    
     delay(50);
     digitalWrite(LED_GREEN2, LOW);
     delay(50);
-
-  }
-}
-
-void LEDWait() {
-
-  int i = 0;
-  for (i = 0; i < 10; i++) {
-    digitalWrite(LED_RED, HIGH);
-    digitalWrite(LED_GREEN1, HIGH);
-    digitalWrite(LED_GREEN2, HIGH);
-
-    delay(250);
-    digitalWrite(LED_RED, LOW);
-    digitalWrite(LED_GREEN1, LOW);
-    digitalWrite(LED_GREEN2, LOW);
-    delay(250);
-
   }
 }
 
@@ -121,22 +103,25 @@ void poweronEthModule() {
   digitalWrite(ETH_MODULE_PON, HIGH);
 }
 
-
 void setup()
 {
   Serial.begin(115200);
-  Serial.println("heating v1 starting...");
+  Serial.println("arduino_poe_ip_relay v1.1 starting...");
+  
   ETHModuleInit();
   Serial.println("eth module init doen.");
+  
   LEDInit();
   Serial.println("led init done.");
+  
   LEDTest();
   Serial.println("led test done.");
-  //LEDWait();
-  //Serial.println("led wait done.");
+  
   poweronEthModule();
-
+  Serial.println("powering eth module on done.");
+  
   uint8_t mac[6] = {0x00, 0x01, 0x02, 0x03, 0x04, 0x05};
+  
   IPAddress myIP(10, 100, 1, 71);
   Serial.println("my ip: 10.100.1.71");
 
@@ -147,12 +132,6 @@ void setup()
   Serial.println("ip server started.");
 }
 
-void(* resetFunc) (void) = 0;
-
-
-
-#define WDTINITVALUE 10
-int wdtvalue = WDTINITVALUE;
 
 static uint32_t timer = 0;
 
@@ -166,8 +145,8 @@ void handleWatchdog() {
       LEDindicateWdtInactive();
     }
     if (wdtvalue == 0) {
-      // schon lange keine steuerinformation erhalten, zur sicherheit alle relais abschalten
-
+      // host gave up controlling. switching to emergeny state
+      
       LEDindicateWdtLimit();
       Serial.println("wdt limit!!");
       LEDindicateWdtActive();
@@ -190,8 +169,6 @@ void handleWatchdog() {
 
 void loop()
 {
-  //Serial.println("loop()");
-
   size_t size;
 
   handleWatchdog();
@@ -199,7 +176,6 @@ void loop()
 
   if (EthernetClient client = server.available())
   {
-
     while ((size = client.available()) > 0) {
       handleWatchdog();
       LEDindicateAlive();
@@ -216,60 +192,37 @@ void loop()
 
         byte command = msg[2];
 
-        if (command == 'P' || command == 'O' || command == 'I' || command == 'A' || command == 'T') {
-          //EEPROM.write(pin, command);
-        }
-        // size >= instead of == cause mac os x terminal sends \r\n at the end of the line
+        // comparison with >= instead of == cause mac os x terminal sends \r\n at the end of the line
         if (size >= 6 && command == 'P') { //PWM
           byte value = msg[5] - 0x30;
           value += 10 * (msg[4] - 0x30);
           value += 100 * (msg[3] - 0x30);
-          //EEPROM.write(100 + pin, value); // adresse: 100 + pin, d.h. für pin5 adresse 105
-
+          
           pinMode(pin, OUTPUT);
           analogWrite(pin, value);
+          
           ok = true;
         }
+        
         if (size >= 4 && command == 'O') { //OUTPUT
           int value = msg[3] - 0x30;
-          //EEPROM.write(100 + pin, value); // adresse: 100 + pin, d.h. für pin5 adresse 105
-
+          
           pinMode(pin, OUTPUT);
           digitalWrite(pin, value);
 
           ok = true;
-
         }
-
 
         if (size >= 2 && msg[2] == 'X') { // query config
           //byte value = EEPROM.read(pin);
           client.print("PIN ");
           client.print(pin);
           client.print(" config: ");
-
-          //client.write(value); // e.g. 'T'
-          //client.println();
-
-
-          //if (value == 'O') {
-          //client.print("  value: ");
-          //client.println(EEPROM.read(100+pin));
-
-
-          //}
-          //if (value == 'P') {
-          //client.print("  value: ");
-          //client.println(EEPROM.read(100+pin));
-          //}
+          client.print(digitalRead(pin));
 
           ok = true;
-
         }
-
-
       }
-
       free(msg);
     }
 
@@ -278,23 +231,14 @@ void loop()
       LEDindicateActivity();
       client.println("ACK");
     }
+
     if (ok == 0) {
       client.println("NOK");
       client.println("usage: xxPyyy, e.g. 05P085 - Port 05 PWM 085%");
       client.println("       xxOy,   e.g. 06O1   - Port 06 OUT on");
       client.println("       xxIy,   e.g. 07I    - Read Port 07 Digital Status");
-
     }
     client.stop();
   }
 }
-
-
-
-
-
-
-
-
-
 
