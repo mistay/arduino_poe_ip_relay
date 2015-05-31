@@ -1,4 +1,6 @@
 #include <UIPEthernet.h>
+#include <EEPROM.h>
+#include <TrueRandom.h>
 
 #define LED_RED A0
 #define LED_GREEN1 A1
@@ -106,10 +108,10 @@ void poweronEthModule() {
 void setup()
 {
   Serial.begin(115200);
-  Serial.println("arduino_poe_ip_relay v1.1 starting...");
+  Serial.println("arduino_poe_ip_relay v1.2 starting...");
   
   ETHModuleInit();
-  Serial.println("eth module init doen.");
+  Serial.println("eth module init done.");
   
   LEDInit();
   Serial.println("led init done.");
@@ -120,16 +122,48 @@ void setup()
   poweronEthModule();
   Serial.println("powering eth module on done.");
   
-  uint8_t mac[6] = {0x00, 0x01, 0x02, 0x03, 0x04, 0x05};
+  uint8_t mac[6] = { 0x06,0x02,0x03,0x04,0x05,0x06 };
+  if (EEPROM.read(1) != '#') {
+    Serial.println(F("\nWriting EEProm..."));
   
-  IPAddress myIP(10, 100, 1, 71);
-  Serial.println("my ip: 10.100.1.71");
-
-  Ethernet.begin(mac, myIP);
+    EEPROM.write(1, '#');
+    
+    for (int i = 3; i < 6; i++) {
+      EEPROM.write(i, TrueRandom.randomByte());
+    }
+  }
+  
+  // read 3 last MAC octets
+  for (int i = 3; i < 6; i++) {
+      mac[i] = EEPROM.read(i);
+  }
+  
+  Serial.print("MAC: ");
+  for (int i = 0; i < 6; i++) {
+    Serial.print(mac[i], HEX);
+        if (i<5)
+          Serial.print(':');
+    }
+  Serial.println();
+  
+  
+  
+  
+  
+  Ethernet.begin(mac);
   Serial.println("ethernet init done.");
 
+  Serial.print(F("IP: "));
+  Serial.println(Ethernet.localIP());
+  Serial.print(F("Subnet: "));
+  Serial.println(Ethernet.subnetMask());
+  Serial.print(F("Gateway: "));
+  Serial.println(Ethernet.gatewayIP());
+  Serial.print(F("DNS: "));
+  Serial.println(Ethernet.dnsServerIP());
+ 
   server.begin();
-  Serial.println("ip server started.");
+  Serial.println(F("tcp/ip server started."));
 }
 
 
@@ -213,13 +247,24 @@ void loop()
           ok = true;
         }
 
-        if (size >= 2 && msg[2] == 'X') { // query config
+        if (size >= 2 && msg[2] == 'X') { // query value of a specific pin
           //byte value = EEPROM.read(pin);
           client.print("PIN ");
           client.print(pin);
-          client.print(" config: ");
+          client.print(" read: ");
           client.print(digitalRead(pin));
 
+          ok = true;
+        }
+        if (size >= 2 && msg[2] == 'Y') { // query values of multiple pins 0-10
+          int i=0;
+          for (i=0; i<10; i++) {
+            client.print(" PIN ");
+            client.print(i);
+            client.print(": ");
+            client.print(digitalRead(i));
+          }
+          
           ok = true;
         }
       }
@@ -227,16 +272,20 @@ void loop()
     }
 
     if (ok == 1) {
+      client.print("ACK. WDT: ");
+      client.println(wdtvalue);
+      
       wdtvalue = WDTINITVALUE;
       LEDindicateActivity();
-      client.println("ACK");
+      
     }
 
     if (ok == 0) {
-      client.println("NOK");
-      client.println("usage: xxPyyy, e.g. 05P085 - Port 05 PWM 085%");
+      client.println("BAD");
+      /*client.println("usage: xxPyyy, e.g. 05P085 - Port 05 PWM 085%");
       client.println("       xxOy,   e.g. 06O1   - Port 06 OUT on");
       client.println("       xxIy,   e.g. 07I    - Read Port 07 Digital Status");
+      */  
     }
     client.stop();
   }
